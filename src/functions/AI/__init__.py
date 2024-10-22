@@ -1,1 +1,1 @@
-from .ai_module import *
+from .ai_module import search_on_chatgpt

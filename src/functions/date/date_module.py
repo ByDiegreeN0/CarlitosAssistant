@@ -15,3 +15,12 @@ def get_current_date(text):
     if 'fecha' in text:  # Si el comando contiene 'fecha'
         fecha = datetime.today().strftime('%d de %B de %Y')  # Formato: "día de mes de año"
         talk(f'hoy es {fecha}')  # Usa la función talk para decir la fecha.
+
+def  date_module(text):
+    if 'fecha' in text or 'hora' in text:
+        if 'fecha' in text and 'hora' in text:
+            get_current_fulldate(text)
+        elif 'hora' in text:
+            get_current_hour(text)
+        elif 'fecha' in text:
+            get_current_date(text)

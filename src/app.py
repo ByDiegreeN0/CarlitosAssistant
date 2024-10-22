@@ -1,6 +1,5 @@
 import speech_recognition as sr  # Importa el módulo para el reconocimiento de voz.
 import pyttsx3  # Importa el módulo para convertir texto a voz.
-from datetime import datetime  # Importa para obtener la hora actual.
 from utils.utils import talk, process_command  # Importa talk y process_comand desde utils.py.
 from config.config import ASSISTANT_NAME  # Importa el nombre del asistente desde config
 
@@ -39,23 +38,21 @@ def input_instruction():
 
 
 def run_assistant():
-    from functions import play_youtube_song, search_on_google
-    from functions import  get_current_hour, get_current_date
+    from functions import play_youtube_song, search_module # importa funciones de busqueda
+    from functions import date_module # importa funciones de tiempo
 
-    """Función principal que ejecuta las acciones del asistente según los comandos de voz."""
+    #Función principal que ejecuta las acciones del asistente según los comandos de voz
     text = input_instruction()  # Llama a la función para escuchar y convertir la instrucción a texto.
     if text:
         processed_data = process_command(text)
-        if 'hora' in text:  # Si el comando contiene 'hora', informa la hora actual.
-            get_current_hour(text) # llama la funcion y devuelve la hora
-        elif 'fecha' in text:
-            get_current_date(text) # llama la funcion y devuelve la fecha actual
+        if 'dame la' in text:  # Si el comando contiene 'hora', informa la hora actual.
+            date_module(text) # llama la funcion y devuelve la hora
         elif 'reproduce' in processed_data["commands"] and processed_data["entities"]:
             # Llama a la función para reproducir video en YouTube si contiene 'reproduce' y una entidad (canción).
             song = " ".join(processed_data["entities"])
             play_youtube_song(f'reproduce {song}')
-        elif "busca en google" in text:
-            search_on_google(text)
+        elif "busca en" in text:
+            search_module(text)
         else:
             talk("No entendí el comando.")  # Si no reconoce el comando, informa que no lo entendió.
     else:
